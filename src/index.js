@@ -1,18 +1,16 @@
 const express = require("express")
 const cors = require("cors")
 const dbConnection = require("./config/database")
+const router = require("./routes/index")
+const config = require("./config")
 const app = express()
 app.use(express.json());
 
-const newsRouter = require("./routes/news")
-const categoryRouter = require("./routes/category")
 
-const config = require("./config")
-
+app.use(router)
 app.use(cors())
 
-app.use("/news",newsRouter)
-app.use("/category",categoryRouter)
+
 dbConnection()
 
 
