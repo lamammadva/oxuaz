@@ -15,12 +15,6 @@ exports.getNewsById = async(req,res)=>{
     try {
         const {id} = req.params
         const data = await newsServices.getNewsById(id)
-        if(!data){
-            return res.status(404).json({
-                status:false,
-                message:"news not found"
-            })
-        }
         res.json({
             status:true,
             message:"news exist",
@@ -29,11 +23,10 @@ exports.getNewsById = async(req,res)=>{
 
         
     } catch (error) {
-        res.status(500).json({
-            status:false,
-            message:"server error"
-        })
-        
+       res.status(404).json({
+        message:error?.message
+
+       })
     }
   
 

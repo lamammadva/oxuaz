@@ -15,11 +15,12 @@ const getCategoryById = async(id)=>{
     return data
 }
 const deleteCategory = async(id)=>{
-    const data = Category.deleteOne({_id:id})
-    return data
+    const data = await getCategoryById(id)
+    if(!data) throw new Error("not found category with id")
+    const dataDelete = Category.deleteOne({_id:id})
+    return dataDelete
 }
 const updateCategory = async(id,updatedata)=>{
-    
     const data = await Category.findByIdAndUpdate(id,updatedata)
     return data
 }

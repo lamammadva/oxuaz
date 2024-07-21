@@ -17,6 +17,6 @@ dbConnection()
 
 
 
-app.listen(config.PORT,()=>{
-    console.log(`Server is running ${config.PORT}`);
+app.listen(config.port,()=>{
+    console.log(`Server is running ${config.port}`);
 })

@@ -22,6 +22,7 @@ const deletedNews = async (id) =>{
 }
 const getNewsById = async (id)=>{
     const data = await News.findById(id)
+    if(!data) throw new Error("not found news with id")
     return data
 }
 const updateNews = async (id,updatedata)=>{
