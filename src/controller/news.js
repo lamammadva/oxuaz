@@ -3,8 +3,9 @@ const { newsServices } = require("../services")
 
 
 exports.getAllNews = async(req,res)=>{
+    const {user} = req
     try {
-        const data = await newsServices.getNews()
+        const data = await newsServices.getNews(user._id)
         res.status(200).json(data)
     } catch (error) {
         
@@ -32,8 +33,11 @@ exports.getNewsById = async(req,res)=>{
 
 }
 exports.createNews = async(req,res)=>{
+    const {user} = req
+    const params = {...req.body, userId:user._id}
+    console.log(params);
     try {
-        const data = await newsServices.createNews(req.body)
+        const data = await newsServices.createNews(params)
         res.status(200).json(data)
     } catch (error) {
         res.status(500).json({error:"server error"})

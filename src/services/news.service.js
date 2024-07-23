@@ -1,17 +1,20 @@
 const News = require("../models/news")
 
 const createNews = async (newdata)=>{
-    const {title,description,category} = newdata
+    const {title,description,category,userId} = newdata
     const newsitems = await News.create({
         title,
         description,
-        category
+        category,
+        userId
+        
     })
     return newsitems
 
 }
-const getNews = async ()=>{
-    const data = await News.find()
+const getNews = async (userId)=>{
+    
+    const data = await News.find({userId:userId})
     return data
 }
 const deletedNews = async (id) =>{

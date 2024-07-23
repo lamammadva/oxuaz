@@ -21,7 +21,10 @@ const userAll = async(req,res)=>{
 
 
 }
+const findById = async(req,res)=>{
+    const data = await userServices.findById(req.params.id)
+}
 
 module.exports = {
-    createuser,userAll
+    createuser,userAll,findById
 }

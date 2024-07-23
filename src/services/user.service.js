@@ -21,7 +21,10 @@ const findByUsername = async (username)=>{
     const data = await User.findOne({username:username})
     return data
 }
-
+const findById = async (id)=>{
+    const data = await User.findById(id)
+    return data
+}
 const userAll = async ()=>{
     const data = await User.find()
     return data
@@ -30,5 +33,5 @@ const userAll = async ()=>{
 }
 
 module.exports = {
-    createuser,findByUsername,userAll
+    createuser,findByUsername,userAll,findById
 }

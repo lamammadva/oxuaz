@@ -19,6 +19,9 @@ const newsSchema = new mongoose.Schema({
     },
     category:{
         type:mongoose.Schema.Types.ObjectId,ref:"Category"
+    },
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,ref:"User"
     }
 
 })
