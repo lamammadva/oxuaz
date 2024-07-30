@@ -1,4 +1,5 @@
-const User = require("../models/user.model")
+const { NotFoundError, ValidationErrors } = require("../errors")
+const {  checkPassword } = require("../utils/bcrypt")
 const { encodePayload } = require("../utils/jwt.util")
 const { findByUsername } = require("./user.service")
 
@@ -7,10 +8,11 @@ const login = async(params)=>{
     const {username,password} = params || {}
     const  user = await findByUsername(username)
     if(!user){
-        throw new Error("username_not_found")
+        throw new NotFoundError("Username not found!!")
     }
-    if(password !== user.password){ 
-        throw new Error("password_incorrect")
+    let check = await checkPassword(password,user.password)
+    if(!check){ 
+        throw new ValidationErrors("Password incorrect!!")
     }
     const payload = {
         userId :user.id,
@@ -21,6 +23,7 @@ const login = async(params)=>{
         password: undefined,
       };
     return {
+        
         user:userWithoutPassword,
         token
     }

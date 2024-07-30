@@ -2,17 +2,18 @@ const News = require("../models/news")
 const { newsServices } = require("../services")
 
 
-exports.getAllNews = async(req,res)=>{
+exports.getAllNews = async(req,res,next)=>{
     const {user} = req
+    console.log(user);
     try {
         const data = await newsServices.getNews(user._id)
         res.status(200).json(data)
     } catch (error) {
-        
+        next(error)
     }
 
 }
-exports.getNewsById = async(req,res)=>{
+exports.getNewsById = async(req,res,next)=>{
     try {
         const {id} = req.params
         const data = await newsServices.getNewsById(id)
@@ -21,18 +22,15 @@ exports.getNewsById = async(req,res)=>{
             message:"news exist",
             data
         })
-
-        
     } catch (error) {
-       res.status(404).json({
-        message:error?.message
+       next(error)
 
-       })
+       }
     }
   
 
-}
-exports.createNews = async(req,res)=>{
+
+exports.createNews = async(req,res,next)=>{
     const {user} = req
     const params = {...req.body, userId:user._id}
     console.log(params);
@@ -40,13 +38,14 @@ exports.createNews = async(req,res)=>{
         const data = await newsServices.createNews(params)
         res.status(200).json(data)
     } catch (error) {
-        res.status(500).json({error:"server error"})
-        
+        next(error)
     }
 
 }
-exports.updateNews = async(req,res)=>{
+exports.updateNews = async(req,res,next)=>{
     const {id} = req.params
+    const {user} = req
+    const params = {...req.body, userId:user._id}
     try {
         const data = await newsServices.updateNews(id,req.body)
         console.log(data);
@@ -56,16 +55,12 @@ exports.updateNews = async(req,res)=>{
             data
         })
     } catch (error) {
-        res.status(505).json({
-            status:false,
-            message:"server error",
-            
-        })
+        next(error)
         
     }
 
 }
-exports.deleteNews = async(req,res)=>{
+exports.deleteNews = async(req,res,next)=>{
     try {
         const {id} = req.params
         await newsServices.deletedNews(id)
@@ -75,11 +70,7 @@ exports.deleteNews = async(req,res)=>{
             
         })
     } catch (error) {
-        res.status(505).json({
-            status:false,
-            message:"serve error"
-        })
-        
+        next(error)
     }
 
 }

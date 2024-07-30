@@ -1,3 +1,4 @@
+const { NotFoundError, AppError } = require("../errors")
 const News = require("../models/news")
 
 const createNews = async (newdata)=>{
@@ -13,7 +14,6 @@ const createNews = async (newdata)=>{
 
 }
 const getNews = async (userId)=>{
-    
     const data = await News.find({userId:userId})
     return data
 }
@@ -25,7 +25,6 @@ const deletedNews = async (id) =>{
 }
 const getNewsById = async (id)=>{
     const data = await News.findById(id)
-    if(!data) throw new Error("not found news with id")
     return data
 }
 const updateNews = async (id,updatedata)=>{
